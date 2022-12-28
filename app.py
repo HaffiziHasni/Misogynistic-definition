@@ -15,7 +15,7 @@ from sklearn.metrics import accuracy_score
 
 
 
-df=pd.read_csv('new.csv',encoding='latin-1')
+df=pd.read_csv('data/new.csv',encoding='latin-1')
 #cleaning stop words and put into new column
 df['cleaned_definition_nostop'] = df['cleaned_definition'].apply(lambda x: ' '.join([item for item in x.split() if item not in STOPWORDS]))
 
@@ -81,6 +81,9 @@ predicty.columns=['Misogynistic?']
 
 df_temp=pd.concat([only,predicty],axis=1)
 print(df_temp) 
+
+
+
 
 #ask input from user and whether it is misogynistic
 text = input("Enter the text you want to check: ")
