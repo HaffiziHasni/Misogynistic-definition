@@ -10,6 +10,6 @@ def clean_data(df):
     return df
 
 def get_X_and_y(df):
-    y = df['cleaned_definition_nostop']
+    y = df['is_misogyny']
     X = df.drop(columns=['cleaned_definition_nostop', 'is_misogyny'])
     return X, y

@@ -25,7 +25,7 @@ X, y = data_processing.get_X_and_y(df)
 
 # Extract features from the dependent variable
 X = feature_extraction.extract_features(X, y)
-y = df['is_misogyny']
+#y = df['is_misogyny']
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
@@ -45,24 +45,27 @@ print("Random forest test score: ", test_score)
 
 # Read in the new data to be predicted
 datanew = pd.read_csv('data/testdata.csv', encoding='latin-1')
-only = datanew['Definition']
-only = pd.DataFrame(only)
+X = datanew[datanew.columns[0]]
+X = pd.DataFrame(X)
 
 # Extract features from the new data
-tfidf_wm = feature_extraction.extract_features(only, only['Definition'])
-y = df['is_misogyny'] #idk why, but you need to put this, probably because, initially y is pointed to X.
+tfidf_wm = feature_extraction.extract_features(X, X[datanew.columns[0]])
+#y = df['is_misogyny'] #idk why, but you need to put this, probably because, initially y is pointed to X.
 # Use the random forest model to make predictions on the new data
 predicty = model_training.train_random_forest(X_train, y_train, X_test, y_test)
 predicty = pd.DataFrame(predicty)
 predicty.columns = ['Misogynistic?']
 
 # Combine the new data with the predictions
-df_temp = pd.concat([only, predicty], axis=1)
+df_temp = pd.concat([X, predicty], axis=1)
 print(df_temp)
+
+#getting input
+userInput=input("Enter a phrase: ")
 
 
 """
-text = input("Enter the text you want to check: ")
+
 
 only = pd.DataFrame({'Definition': [text]})
 tfidf_wm = v.transform(only['Definition']).toarray() 
